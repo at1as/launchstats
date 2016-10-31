@@ -55,6 +55,7 @@ defmodule Launchstats.StatsController do
     params_map = add_params_to_map(params_map, "limit", page_size)
     params_map = add_params_to_map(params_map, "startdate", start_date)
     params_map = add_params_to_map(params_map, "enddate", end_date)
+    params_map = add_params_to_map(params_map, "offset", offset)
     params_map = add_params_to_map(params_map, "sort", sort)
     params_map = add_params_to_map(params_map, "name", name)
 

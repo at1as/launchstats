@@ -53,7 +53,7 @@
             <input type="button" class="btn btn-secondary" value="&lt;&lt;">
           <% end %>
           
-          <input type="submit" class="btn btn-primary" value=" Filter Results " style="width:190px; margin-left:15px; marign-right:15px">
+          <input type="submit" class="btn btn-primary" value=" Filter Results " style="width:190px; margin-left:15px; margin-right:15px">
           
           <%= if is_greater(add_html_nums(@offset, @page_size), @total) do %>
             <input type="button" class="btn btn-secondary" value="&gt;&gt;">
