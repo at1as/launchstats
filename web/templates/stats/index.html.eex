@@ -1,0 +1,24 @@
+<%= if @type == "historical" do %>
+
+  <h2>Past Launches</h2>
+  <h4 style="margin-top:0px">Showing launches <%= add_html_nums(@offset, 1) %> to <%= add_html_nums(@count, @offset) %> out of <%= @total %> historical</h4>
+
+  <%= render "table_filter.html", conn: @conn, count: @count, offset: @offset, total: @total, page_size: @page_size%>
+  <%= render "table_historical.html", conn: @conn, launches: @launches %>
+<% end %>
+
+<%= if @type == "upcoming" do %>
+  
+  <h2>Upcoming Launches</h2>
+  <h4 style="margin-top:0px">Showing launches <%= add_html_nums(@offset, 1) %> to <%= add_html_nums(@count, @offset) %> out of <%= @total %> upcoming</h4>
+  
+  <%= render "table_filter.html", conn: @conn, count: @count, offset: @offset, total: @total, page_size: @page_size %>
+  <%= render "table_upcoming.html", conn: @conn, launches: @launches %>
+
+<% end %>
+
+<%= if @type == "extended-search" do %>
+  TODO
+
+<% end %>
+

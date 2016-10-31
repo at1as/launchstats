@@ -1,0 +1,62 @@
+<h3><%= @launch["name"] %></h3>
+
+
+
+
+
+<!-- MISSION -->
+<%= if length(@launch["vidURLs"]) > 0 do %>
+  <h4 style="margin-top:50px;">
+    Mission: <%= @launch["missions"] |> List.first |> Map.get("name") %>
+  </h4>
+  <hr>
+  <%= @launch["missions"] |> List.first |> Map.get("description") %>
+<% end %>
+
+
+<!-- DATE -->
+<h4 style="margin-top:50px;">
+  Date: <%= @launch["net"] %>
+</h4>
+<hr>
+<b>Launch Window Start </b> : <%= @launch["windowstart"] %><br/>
+<b>Launch Window Finish</b> : <%= @launch["windowend"] %><br/>
+
+<%= if @launch["tbddate"] == 0, do: "Date Status : Confirmed", else: "Date Status : Tentative" %><br/>
+<%= if @launch["tbdtime"] == 0, do: "Time Status : Confirmed", else: "Time Status : Tentative" %>
+
+
+<!-- LOCATION -->
+<h4 style="margin-top:50px;">
+  Location
+</h4>
+<hr>
+<%= @launch["location"] |> Map.get("name") %> 
+
+
+<!-- ROCKETS -->
+<h4 style="margin-top:50px;">
+  Rocket
+</h4>
+<hr>
+<%= @launch["rocket"] |> Map.get("name") %>
+<a href="<%= @launch["rocket"] |> Map.get("imageURL") %>">Image</a><br/>
+Wiki : <a href="<%= @launch["rocket"] |> Map.get("wikiURL") %>"><%= @launch["rocket"] |> Map.get("wikiURL") %></a>
+
+
+
+<!-- MEDIA -->
+<%= if length(@launch["vidURLs"]) > 0 do %>
+  <h4 style="margin-top:50px;">
+    Live Streams
+  </h4>
+  <hr>
+  <%= for videoURL <- @launch["vidURLs"] do %>
+    <ul>
+      <li><a href="<%= videoURL %>"><%= videoURL %></a> </li>
+  </ul>
+  <% end %>
+<% end %>
+
+
+<%= link "All Launches", to: stats_path(@conn, :index) %>

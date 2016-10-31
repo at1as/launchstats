@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Launch Name</th>
+      <th class="text-center">Rocket Name</th>
+      <th class="text-center">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <%= for launch <- @launches do %>
+      
+      <td class="text-left">
+        <%= link "#{Enum.at(String.split(launch["name"], "|") |> Enum.map(fn(x) -> String.trim(x) end), 1)}", to: stats_path(@conn, :show, launch["id"]) %>
+      </td>
+        
+      <td class="text-center">
+        <%= Enum.at(String.split(launch["name"], "|") |> Enum.map(fn(x) -> String.trim(x) end), 0) %>
+      </td>
+
+      <td class="text-center">
+        <%= launch["net"] %>
+      </td>
+      
+    </tr>
+  <% end %>
+  </tbody>
+</table>
