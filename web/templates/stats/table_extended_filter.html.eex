@@ -32,7 +32,7 @@
         </div>
         <label for="offset" class="control-label col-md-1" style="text-align:right">Offset</label>
         <div class="col-md-3">
-          <input name="offset" value="<%= @offset %>" class="form-control" type="number" min="0">
+          <input name="offset" id="idx-offset" value="<%= @offset %>" class="form-control" type="number" min="0">
         </div>
         <label for="sort" class="control-label col-md-1" style="text-align:right">Sort</label>
         <div class="col-md-3">

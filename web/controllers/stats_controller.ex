@@ -42,11 +42,10 @@ defmodule Launchstats.StatsController do
   end
 
   def search(conn, params) do
-    IO.puts "HI"
     # Template Params
-    name       = Map.get(params, "name", "")
-    start_date = Map.get(params, "start_date", "")
-    end_date   = Map.get(params, "end_date", "")
+    name       = Map.get(params, "name")
+    start_date = Map.get(params, "start_date")
+    end_date   = Map.get(params, "end_date")
     offset     = Map.get(params, "offset", 0)
     page_size  = Map.get(params, "page_size", 10)
     sort       = Map.get(params, "sort", "asc")
@@ -91,10 +90,10 @@ defmodule Launchstats.StatsController do
   end
 
   defp add_params_to_map(params_as_map, name_in_api, value) do
-    if value do
-      Map.put(params_as_map, name_in_api, value)
-    else
+    if value in [nil, "", ''] do
       params_as_map
+    else
+      Map.put(params_as_map, name_in_api, value)
     end
   end
 

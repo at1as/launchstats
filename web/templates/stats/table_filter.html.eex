@@ -1,4 +1,8 @@
-<form method="get" action="<%= stats_path(@conn, :historical) %>" class="form-horizontal">
+<%= if @type == "historical" do %>
+  <form method="get" action="<%= stats_path(@conn, :historical) %>" class="form-horizontal">
+<% else %>
+  <form method="get" action="<%= stats_path(@conn, :index) %>" class="form-horizontal">
+<% end %>
   <div class="form-group">
     <div class="col-md-12">
       <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px; padding:20px; margin-bottom:20px">
