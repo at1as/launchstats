@@ -1,45 +1,72 @@
-<form method="get" action="<%= stats_path(@conn, :historical) %>" class="form-horizontal">
+<form method="get" action="<%= stats_path(@conn, :search) %>" class="form-horizontal">
   <div class="form-group">
-    <div class="col-md-12">
-      <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px; padding:20px; margin-bottom:20px">
-
-
-        <!-- PAGE SIZE -->
-        <label for="page_size" class="control-label col-md-1" style="text-align:right">Results</label>
-        <div class="col-md-2">
-          <input name="page_size" value="<%= @page_size %>" type="number" class="form-control" min="1">
+    <div class="col-md-12" style="padding-top:25px; padding-bottom:15px">
+      
+      <!-- NAME -->
+      <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px;">
+        <label for="name" class="control-label col-md-1" style="text-align:right">Name</label>
+        <div class="col-md-11">
+          <input name="name" value="<%= @name %>" class="form-control">
         </div>
+      </div>
 
-        <!-- INDEX OFFSET (by items, not number of pages) -->
+      <!-- START DATE / END DATE -->
+      <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px;">
+        <label for="start_date" class="control-label col-md-1" style="text-align:right">Date</label>
+        <div class="col-md-5">
+          <input name="start_date" value="<%= @start_date %>" class="form-control" placeholder="Start Date">
+        </div>
+        <label class="control-label col-md-1" style="text-align:center">to</label>
+        <div class="col-md-5">
+          <input name="end_date" value="<%= @end_date %>" class="form-control" placeholder="End Date">
+        </div>
+      </div>
+
+      <hr/>
+
+      <!-- RESULTS (PAGE SIZE) / OFFSET / SORT (ASC/DESC) -->
+      <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px;">
+        <label for="page_size" class="control-label col-md-1" style="text-align:right">Count</label>
+        <div class="col-md-3">
+          <input name="page_size" value="<%= @page_size %>" class="form-control" type="number" min="1">
+        </div>
         <label for="offset" class="control-label col-md-1" style="text-align:right">Offset</label>
-        <div class="col-md-2">
-          <input name="offset" id="idx-offset" value="<%= @offset %>" type="number" class="form-control" min="0" max="<%= @total %>">
+        <div class="col-md-3">
+          <input name="offset" value="<%= @offset %>" class="form-control" type="number" min="0">
         </div>
-
-        <!-- NEXT PAGE -->
-        <div class="col-md-1 pull-right">
-          <%= if is_greater(add_html_nums(@offset, @page_size), @total) do %>
-            <input type="button" class="btn btn-secondary" value="&gt;&gt;">
-          <% else %>
-            <input type="submit" class="btn btn-primary" value="&gt;&gt;" onclick="document.getElementById('idx-offset').value = <%= next_page(@offset, @page_size) %>">
-          <% end %>
+        <label for="sort" class="control-label col-md-1" style="text-align:right">Sort</label>
+        <div class="col-md-3">
+          <select name="sort" value="<%= @sort %>" class="form-control">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
         </div>
+      </div>
+      
+      <!-- PREV PAGE / FILTER / NEXT PAGE -->
+      <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px; margin-top:10px">
         
-        <!-- PREV PAGE -->
-        <div class="col-md-1 pull-right">
+        <div class="col-md-12" style="margin-top:25px; text-align:center">
           <%= if is_greater(@offset, 0) do %>
             <input type="submit" class="btn btn-primary" value="&lt;&lt;" onclick="document.getElementById('idx-offset').value = <%= prev_page(@offset, @page_size) %>">
           <% else %>
             <input type="button" class="btn btn-secondary" value="&lt;&lt;">
           <% end %>
+          
+          <input type="submit" class="btn btn-primary" value=" Filter Results " style="width:190px; margin-left:15px; marign-right:15px">
+          
+          <%= if is_greater(add_html_nums(@offset, @page_size), @total) do %>
+            <input type="button" class="btn btn-secondary" value="&gt;&gt;">
+          <% else %>
+            <input type="submit" class="btn btn-primary" value="&gt;&gt;" onclick="document.getElementById('idx-offset').value = <%= next_page(@offset, @page_size) %>">
+          <% end %>
+        
         </div>
-
-        <!-- SUBMIT FILTER -->
-        <div class="col-md-2 pull-right">
-          <input type="submit" class="btn btn-primary" value="Filter Results">
-        </div>
-
+        
+      
       </div>
     </div>
+
+    <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px;"></div><!-- CLEAR -->
   </div>
 </form>

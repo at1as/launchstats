@@ -42,23 +42,34 @@ defmodule Launchstats.StatsController do
   end
 
   def search(conn, params) do
+    IO.puts "HI"
+    # Template Params
+    name       = Map.get(params, "name", "")
+    start_date = Map.get(params, "start_date", "")
+    end_date   = Map.get(params, "end_date", "")
     offset     = Map.get(params, "offset", 0)
-    page_size  = Map.get(params, "page_size", 10) 
-    
+    page_size  = Map.get(params, "page_size", 10)
+    sort       = Map.get(params, "sort", "asc")
+
+    # URL Params
     params_map = %{}
-    params_map = add_params_to_map(params_map, "page_size", "limit")
-    params_map = add_params_to_map(params_map, "start_date", "startdate")
-    params_map = add_params_to_map(params_map, "end_date", "enddate")
-    params_map = add_params_to_map(params_map, "sort", "sort")
-    params_map = add_params_to_map(params_map, "name", "name")
+    params_map = add_params_to_map(params_map, "limit", page_size)
+    params_map = add_params_to_map(params_map, "startdate", start_date)
+    params_map = add_params_to_map(params_map, "enddate", end_date)
+    params_map = add_params_to_map(params_map, "sort", sort)
+    params_map = add_params_to_map(params_map, "name", name)
 
     url_params = url_params_to_str(params_map)
     url        = make_url("launch", url_params)
+    IO.puts url
+
     response   = make_request(url)
 
     {launches, count, total} = extract_launch_body(response)
 
-    render conn, "index.html", launches: launches, count: count, total: total, offset: offset, page_size: page_size, type: "extended-search"
+    render conn, "index.html", launches: launches, count: count, total: total, offset: offset, page_size: page_size, 
+                               name: name, start_date: start_date, end_date: end_date, sort: sort,
+                               type: "extended-search"
   end
 
   defp make_request(url) do
@@ -79,9 +90,9 @@ defmodule Launchstats.StatsController do
     Enum.join(url_params, "&")
   end
 
-  defp add_params_to_map(params_as_map, name, name_in_api) do
-    if Map.get(params_as_map, name) do
-      Map.put(params_as_map, name_in_api, Map.get(params_as_map, name))
+  defp add_params_to_map(params_as_map, name_in_api, value) do
+    if value do
+      Map.put(params_as_map, name_in_api, value)
     else
       params_as_map
     end
