@@ -42,7 +42,7 @@
           </select>
         </div>
       </div>
-      
+      <hr/>      
       <!-- PREV PAGE / FILTER / NEXT PAGE -->
       <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px; margin-top:10px">
         

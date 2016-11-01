@@ -24,10 +24,10 @@ form.link, form.button {
 }
 .logo {
   width: 519px;
-  height: 71px;
+  height: 15px;
   display: inline-block;
   margin-bottom: 1em;
-  background-image: url("/images/phoenix.png");
+  /*background-image: url("/images/phoenix.png"); */
   background-size: 519px 71px;
 }
 

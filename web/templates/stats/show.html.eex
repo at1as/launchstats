@@ -1,7 +1,5 @@
+<%= link "All Launches", to: stats_path(@conn, :index) %>
 <h3><%= @launch["name"] %></h3>
-
-
-
 
 
 <!-- MISSION -->
@@ -31,7 +29,14 @@
   Location
 </h4>
 <hr>
-<%= @launch["location"] |> Map.get("name") %> 
+<%= @launch["location"] |> Map.get("name") %>
+<!-- launch pad -->
+<br/><b>Launch Pad</b><br/>
+<b>Name</b> : <%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("name") %><br/>
+<b>Lat/Long</b> : (<%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("longitude") %>,
+<%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("latitude") %>)<br/>
+<a href="<%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("mapURL") %>">Wiki</a>
+<a href="<%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("wikiURL") %>">Map</a>
 
 
 <!-- ROCKETS -->
@@ -39,7 +44,7 @@
   Rocket
 </h4>
 <hr>
-<%= @launch["rocket"] |> Map.get("name") %>
+<%= @launch["rocket"] |> Map.get("name") %><br/>
 <a href="<%= @launch["rocket"] |> Map.get("imageURL") %>">Image</a><br/>
 Wiki : <a href="<%= @launch["rocket"] |> Map.get("wikiURL") %>"><%= @launch["rocket"] |> Map.get("wikiURL") %></a>
 
@@ -58,5 +63,3 @@ Wiki : <a href="<%= @launch["rocket"] |> Map.get("wikiURL") %>"><%= @launch["roc
   <% end %>
 <% end %>
 
-
-<%= link "All Launches", to: stats_path(@conn, :index) %>
