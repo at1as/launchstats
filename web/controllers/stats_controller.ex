@@ -11,7 +11,7 @@ defmodule Launchstats.StatsController do
     
     url        = make_url(endpoint = "launch", params = url_params)
     response   = make_request(url)
-    {launches, count, total} = extract_launch_body(response)
+    {launches, count, total} = extract_from_body(response, "launches")
     
     render conn, "index.html", launches: launches, count: count, total: total, offset: offset, page_size: page_size, type: "upcoming"
   end
@@ -20,7 +20,7 @@ defmodule Launchstats.StatsController do
     url      = make_url("launch/#{id}?mode=verbose")
     response = make_request(url)
     
-    {launches, _, _} = extract_launch_body(response)
+    {launches, _, _} = extract_from_body(response, "launches")
     launch = List.first(launches)
     
     render conn, "show.html", launch: launch
@@ -36,7 +36,7 @@ defmodule Launchstats.StatsController do
     url        = make_url("launch", url_params)
     response   = make_request(url)
 
-    {launches, count, total} = extract_launch_body(response)
+    {launches, count, total} = extract_from_body(response, "launches")
    
     render conn, "index.html", launches: launches, count: count, total: total, offset: offset, page_size: page_size, type: "historical"
   end
@@ -61,25 +61,55 @@ defmodule Launchstats.StatsController do
 
     url_params = url_params_to_str(params_map)
     url        = make_url("launch", url_params)
-    IO.puts url
 
     response   = make_request(url)
 
-    {launches, count, total} = extract_launch_body(response)
+    {launches, count, total} = extract_from_body(response, "launches")
+    
+    rockets     = rockets
+    launch_pads = launch_pads
 
     render conn, "index.html", launches: launches, count: count, total: total, offset: offset, page_size: page_size, 
                                name: name, start_date: start_date, end_date: end_date, sort: sort,
                                type: "extended-search"
   end
 
+
+  defp rockets do
+    url_params = url_params_to_str(%{"limit" => 200})
+    url        = make_url("rocket", url_params)
+    response   = make_request(url)
+    {rockets, _count, _total} =  extract_from_body(response, "rockets")
+    rockets
+  end
+
+  defp launch_pads do
+    url_params = url_params_to_str(%{"limit" => 200})
+    url        = make_url("pad", url_params)
+    response   = make_request(url)
+    {launch_pads, _count, _total} =  extract_from_body(response, "pads")
+    launch_pads
+  end
+  
+  defp extract_from_body(response, key) do
+    {_status, response_body} = response.body |> JSON.decode
+    {response_body[key], response_body["count"], response_body["total"]}
+  end
+
   defp make_request(url) do
     HTTPotion.get url, headers: ["User-Agent": http_header]
+  end
+  
+  defp http_header do
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0" 
   end
 
   defp make_url(endpoint \\ "", params \\ "") do
     base_url = "https://launchlibrary.net/1.2"
+    
     endpoint = String.trim_leading(endpoint, "/") 
                |> String.trim_trailing("/")
+
     full_url = base_url <> "/" <> endpoint <> "?" <> params
                |> String.replace("/?", "?")
                |> String.trim_trailing("?")
@@ -96,15 +126,6 @@ defmodule Launchstats.StatsController do
     else
       Map.put(params_as_map, name_in_api, value)
     end
-  end
-
-  defp http_header do
-    http_header = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0" 
-  end
-
-  defp extract_launch_body(response) do
-    {_status, response_body} = response.body |> JSON.decode
-    {response_body["launches"], response_body["count"], response_body["total"]}
   end
 
   defp get_current_date do
