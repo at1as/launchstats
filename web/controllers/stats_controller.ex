@@ -69,8 +69,9 @@ defmodule Launchstats.StatsController do
     rockets     = rockets
     launch_pads = launch_pads
 
-    render conn, "index.html", launches: launches, count: count, total: total, offset: offset, page_size: page_size, 
-                               name: name, start_date: start_date, end_date: end_date, sort: sort,
+    render conn, "index.html", launches: launches, rockets: rockets, launch_pads: launch_pads,
+                               name: name, start_date: start_date, end_date: end_date,
+                               count: count, total: total, offset: offset, page_size: page_size, sort: sort,
                                type: "extended-search"
   end
 

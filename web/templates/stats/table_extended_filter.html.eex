@@ -22,6 +22,26 @@
         </div>
       </div>
 
+      <!-- ROCKET NAME / LAUNCH PAD -->
+      <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px;">
+        <label for="rocket_id" class="control-label col-md-1" style="text-align:right">Rocket</label>
+        <div class="col-md-5">
+          <select name="rocket_id" value="<%= @sort %>" class="form-control">
+            <%= for rocket <- @rockets do %>
+              <option value="<%= Map.get(rocket, "id") %>"><%= Map.get(rocket, "name")%></option>
+            <% end %>
+          </select>
+        </div>
+        <label for="rocket_id" class="control-label col-md-1" style="text-align:right">Pad</label>
+        <div class="col-md-5">
+          <select name="pad_id" value="<%= @sort %>" class="form-control">
+            <%= for pad <- @launch_pads do %>
+              <option value="<%= Map.get(pad, "id") %>"><%= Map.get(pad, "name")%></option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+
       <hr/>
 
       <!-- RESULTS (PAGE SIZE) / OFFSET / SORT (ASC/DESC) -->
