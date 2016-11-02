@@ -18,6 +18,11 @@ form.link, form.button {
   display: inline;
 }
 
+/* for active links */
+.active{
+  background-color:#EEE;
+}
+
 /* Custom page header */
 .header {
   border-bottom: 1px solid #e5e5e5;
