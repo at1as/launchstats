@@ -44,6 +44,8 @@ defmodule Launchstats.StatsController do
   def search(conn, params) do
     # Template Params
     name       = Map.get(params, "name")
+    location_id= Map.get(params, "location_id")
+    rocket_id  = Map.get(params, "rocket_id")
     start_date = Map.get(params, "start_date")
     end_date   = Map.get(params, "end_date")
     offset     = Map.get(params, "offset", 0)
@@ -58,6 +60,8 @@ defmodule Launchstats.StatsController do
     params_map = add_params_to_map(params_map, "offset", offset)
     params_map = add_params_to_map(params_map, "sort", sort)
     params_map = add_params_to_map(params_map, "name", name)
+    params_map = add_params_to_map(params_map, "rocketid", rocket_id)
+    params_map = add_params_to_map(params_map, "locationid", location_id)
 
     url_params = url_params_to_str(params_map)
     url        = make_url("launch", url_params)
@@ -65,18 +69,19 @@ defmodule Launchstats.StatsController do
     response   = make_request(url)
 
     {launches, count, total} = extract_from_body(response, "launches")
-    
-    rockets     = rockets
-    launch_pads = launch_pads
+   
+    empty_resp  = [%{"name" => "All", "id" => nil, "countrycode"  => nil}]
+    rockets     = empty_resp ++ Enum.sort_by(get_rocket_list, fn(x) -> Map.get(x, "name") end)
+    locations   = empty_resp ++ Enum.sort_by(get_location_list, fn(x) -> Map.get(x, "countrycode") end)
 
-    render conn, "index.html", launches: launches, rockets: rockets, launch_pads: launch_pads,
+    render conn, "index.html", launches: launches, rockets: rockets, rocket_id: rocket_id, locations: locations, location_id: location_id,
                                name: name, start_date: start_date, end_date: end_date,
                                count: count, total: total, offset: offset, page_size: page_size, sort: sort,
                                type: "extended-search"
   end
 
 
-  defp rockets do
+  defp get_rocket_list do
     url_params = url_params_to_str(%{"limit" => 200})
     url        = make_url("rocket", url_params)
     response   = make_request(url)
@@ -84,7 +89,7 @@ defmodule Launchstats.StatsController do
     rockets
   end
 
-  defp launch_pads do
+  defp get_launch_pad_list do
     url_params = url_params_to_str(%{"limit" => 200})
     url        = make_url("pad", url_params)
     response   = make_request(url)
@@ -92,9 +97,17 @@ defmodule Launchstats.StatsController do
     launch_pads
   end
   
+  defp get_location_list do
+    url_params = url_params_to_str(%{"limit" => 200})
+    url        = make_url("location", url_params)
+    response   = make_request(url)
+    {locations, _count, _total} =  extract_from_body(response, "locations")
+    locations
+  end
+  
   defp extract_from_body(response, key) do
     {_status, response_body} = response.body |> JSON.decode
-    {response_body[key], response_body["count"], response_body["total"]}
+    {response_body[key], response_body["count"], response_body["total"] || 0}
   end
 
   defp make_request(url) do

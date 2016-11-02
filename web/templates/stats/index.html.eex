@@ -1,7 +1,7 @@
 <%= if @type == "historical" do %>
 
   <h2>Past Launches</h2>
-  <h4 style="margin-top:0px">Showing launches <%= add_html_nums(@offset, 1) %> to <%= add_html_nums(@count, @offset) %> out of <%= @total %> historical</h4>
+  <h4 style="margin-top:0px">Showing launches <%= pagination_description(@offset, @count, @total) %> historical</h4>
 
   <%= render "table_filter.html", conn: @conn, count: @count, offset: @offset, total: @total, page_size: @page_size, type: @type %>
   <%= render "table_historical.html", conn: @conn, launches: @launches %>
@@ -10,7 +10,7 @@
 <%= if @type == "upcoming" do %>
   
   <h2>Upcoming Launches</h2>
-  <h4 style="margin-top:0px">Showing launches <%= add_html_nums(@offset, 1) %> to <%= add_html_nums(@count, @offset) %> out of <%= @total %> upcoming</h4>
+  <h4 style="margin-top:0px">Showing launches <%= pagination_description(@offset, @count, @total) %> upcoming</h4>
   
   <%= render "table_filter.html", conn: @conn, count: @count, offset: @offset, total: @total, page_size: @page_size , type: @type %>
   <%= render "table_upcoming.html", conn: @conn, launches: @launches %>
@@ -20,9 +20,9 @@
 <%= if @type == "extended-search" do %>
 
   <h2>Launch Search</h2>
-  <h4 style="margin-top:0px">Showing launches <%= add_html_nums(@offset, 1) %> to <%= add_html_nums(@count, @offset) %> out of <%= @total %> upcoming</h4>
+  <h4 style="margin-top:0px">Showing <%= pagination_description(@offset, @count, @total) %> matching launches</h4>
 
-  <%= render "table_extended_filter.html", conn: @conn, count: @count, offset: @offset, total: @total, page_size: @page_size, name: @name, start_date: @start_date, end_date: @end_date, sort: @sort, rockets: @rockets, launch_pads: @launch_pads %>
+  <%= render "table_extended_filter.html", conn: @conn, count: @count, offset: @offset, total: @total, page_size: @page_size, name: @name, start_date: @start_date, end_date: @end_date, sort: @sort, rockets: @rockets, rocket_id: @rocket_id, locations: @locations, location_id: @location_id %>
   <%= render "table_upcoming.html", conn: @conn, launches: @launches %>
 
 <% end %>

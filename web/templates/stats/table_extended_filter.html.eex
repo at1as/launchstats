@@ -10,37 +10,46 @@
         </div>
       </div>
 
+      <!-- ROCKET NAME / LOCATION -->
+      <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px;">
+        <label for="rocket_id" class="control-label col-md-1" style="text-align:right">Rocket</label>
+        <div class="col-md-5">
+          <select name="rocket_id" class="form-control">
+            <%= for rocket <- @rockets do %>
+              <%= if num_vals_equal(Map.get(rocket, "id"), @rocket_id) do %>
+                <option value="<%= Map.get(rocket, "id") %>" selected><%= Map.get(rocket, "name")%></option>
+              <% else %>
+                <option value="<%= Map.get(rocket, "id") %>"><%= Map.get(rocket, "name")%></option>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+        <label for="location_id" class="control-label col-md-1" style="text-align:right">Location</label>
+        <div class="col-md-5">
+          <select name="location_id" class="form-control">
+            <%= for location <- @locations do %>
+              <%= if num_vals_equal(Map.get(location, "id"), @location_id) do %>
+                <option value="<%= Map.get(location, "id") %>" selected><%= Map.get(location, "countrycode") %> <%= Map.get(location, "name") %></option>
+              <% else %>
+                <option value="<%= Map.get(location, "id") %>"><%= Map.get(location, "countrycode") %> <%= Map.get(location, "name") %></option>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+      </div>
+      
       <!-- START DATE / END DATE -->
       <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px;">
         <label for="start_date" class="control-label col-md-1" style="text-align:right">Date</label>
         <div class="col-md-5">
-          <input name="start_date" value="<%= @start_date %>" class="form-control" placeholder="Start Date">
+          <input name="start_date" value="<%= @start_date %>" class="form-control" placeholder="Start Date YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
         </div>
         <label class="control-label col-md-1" style="text-align:center">to</label>
         <div class="col-md-5">
-          <input name="end_date" value="<%= @end_date %>" class="form-control" placeholder="End Date">
+          <input name="end_date" value="<%= @end_date %>" class="form-control" placeholder="End Date YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2]}">
         </div>
       </div>
 
-      <!-- ROCKET NAME / LAUNCH PAD -->
-      <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px;">
-        <label for="rocket_id" class="control-label col-md-1" style="text-align:right">Rocket</label>
-        <div class="col-md-5">
-          <select name="rocket_id" value="<%= @sort %>" class="form-control">
-            <%= for rocket <- @rockets do %>
-              <option value="<%= Map.get(rocket, "id") %>"><%= Map.get(rocket, "name")%></option>
-            <% end %>
-          </select>
-        </div>
-        <label for="rocket_id" class="control-label col-md-1" style="text-align:right">Pad</label>
-        <div class="col-md-5">
-          <select name="pad_id" value="<%= @sort %>" class="form-control">
-            <%= for pad <- @launch_pads do %>
-              <option value="<%= Map.get(pad, "id") %>"><%= Map.get(pad, "name")%></option>
-            <% end %>
-          </select>
-        </div>
-      </div>
 
       <hr/>
 
@@ -66,7 +75,7 @@
       <!-- PREV PAGE / FILTER / NEXT PAGE -->
       <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px; margin-top:10px">
         
-        <div class="col-md-12" style="margin-top:25px; text-align:center">
+        <div class="col-md-12" style="margin-top:10px; text-align:center">
           <%= if is_greater(@offset, 0) do %>
             <input type="submit" class="btn btn-primary" value="&lt;&lt;" onclick="document.getElementById('idx-offset').value = <%= prev_page(@offset, @page_size) %>">
           <% else %>

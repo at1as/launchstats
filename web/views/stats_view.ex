@@ -9,6 +9,20 @@ defmodule Launchstats.StatsView do
     make_int(first) + make_int(second)
   end
 
+  def pagination_description(offset, count, total) do
+    # Return string like "1 to 10 out of 1033"
+    offset = make_int(offset) || 0
+    count  = make_int(count) || 0
+    total  = make_int(total) || 0
+
+    if offset > total, do: offset = total
+    if total == 0 do
+      "0"
+    else
+      "#{offset + 1} to #{offset + count} out of #{total}"
+    end
+  end
+
   def prev_page(offset, pagesize) do
     previous_page = make_int(offset) - make_int(pagesize)
     if previous_page > 0, do: previous_page, else: 0
@@ -18,6 +32,9 @@ defmodule Launchstats.StatsView do
     make_int(offset) + make_int(pagesize)
   end
 
+  def num_vals_equal(val1, val2) do
+    make_int(val1) == make_int(val2)
+  end
 
   defp make_int(value) do
     cond do
