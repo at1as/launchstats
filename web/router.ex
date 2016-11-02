@@ -16,8 +16,7 @@ defmodule Launchstats.Router do
   scope "/", Launchstats do
     pipe_through :browser # Use the default browser stack
     
-    #get "/", StatsController, :index
-    get "/", PageController, :index
+    get "/", StatsController, :index
     get "/stats", StatsController, :index
     get "/stats/historical", StatsController, :historical
     get "/stats/search", StatsController, :search

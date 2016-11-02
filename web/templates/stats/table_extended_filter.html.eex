@@ -55,7 +55,7 @@
 
       <!-- RESULTS (PAGE SIZE) / OFFSET / SORT (ASC/DESC) -->
       <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px;">
-        <label for="page_size" class="control-label col-md-1" style="text-align:right">Count</label>
+        <label for="page_size" class="control-label col-md-1" style="text-align:right">Results</label>
         <div class="col-md-3">
           <input name="page_size" value="<%= @page_size %>" class="form-control" type="number" min="1">
         </div>

@@ -2,6 +2,10 @@
 
 Easily search through historical and upcoming rocket launch data
 
+## Demo
+
+Try it on [Heroku](https://launchstats.herokuapp.com/stats/search)
+
 
 ## Data
 
@@ -25,4 +29,5 @@ Built on Elixir 1.3 and Erlang/OTP 19. Ensure these exist on your system
 * Start server `mix phoenix.server`
 
 Visit [`localhost:4000`](http://localhost:4000) from your browser
+
 

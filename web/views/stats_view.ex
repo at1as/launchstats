@@ -15,7 +15,7 @@ defmodule Launchstats.StatsView do
     count  = make_int(count) || 0
     total  = make_int(total) || 0
 
-    if offset > total, do: offset = total
+    offset = if offset > total, do: total, else: offset
     if total == 0 do
       "0"
     else

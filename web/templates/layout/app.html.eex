@@ -16,9 +16,9 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <li><%= link "Upcoming Launches", to: stats_path(@conn, :index) %></li>
-            <li><%= link "Past Launches", to: stats_path(@conn, :historical) %></li>
-            <li><%= link "Search Launches", to: stats_path(@conn, :search) %></li>
+            <li><%= link "Upcoming Launches", to: stats_path(@conn, :index), class: active_class(@conn, stats_path(@conn, :index))%></li> 
+            <li><%= link "Past Launches", to: stats_path(@conn, :historical), class: active_class(@conn, stats_path(@conn, :historical))%></li>
+            <li><%= link "Search Launches", to: stats_path(@conn, :search) , class: active_class(@conn, stats_path(@conn, :search))%></li>
           </ul>
         </nav>
         <span class="logo"></span>
