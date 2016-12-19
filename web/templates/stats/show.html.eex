@@ -3,8 +3,8 @@
 
 
 <!-- MISSION -->
-<%= if length(@launch["vidURLs"]) > 0 do %>
-  <h4 style="margin-top:50px;">
+<%= if length(@launch["missions"]) > 0 do %>
+  <h4 style="margin-top:50px; margin-left:-10px;">
     Mission: <%= @launch["missions"] |> List.first |> Map.get("name") %>
   </h4>
   <hr>
@@ -13,7 +13,7 @@
 
 
 <!-- DATE -->
-<h4 style="margin-top:50px;">
+<h4 style="margin-top:50px; margin-left:-10px">
   Date: <%= @launch["net"] %>
 </h4>
 <hr>
@@ -25,35 +25,38 @@
 
 
 <!-- LOCATION -->
-<h4 style="margin-top:50px;">
+<h4 style="margin-top:50px; margin-left:-10px;">
   Location
 </h4>
 <hr>
-<%= @launch["location"] |> Map.get("name") %>
-<!-- launch pad -->
-<br/><b>Launch Pad</b><br/>
+<%= if @launch["location"], do: @launch["location"] |> Map.get("name") %>
+
+<!-- LAUNCH PAD -->
+<h4 style="margin-top:50px; margin-left:-10px;">
+  Launch Pad
+</h4>
+<hr>
 <b>Name</b> : <%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("name") %><br/>
 <b>Lat/Long</b> : (<%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("longitude") %>,
 <%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("latitude") %>)<br/>
-<a href="<%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("mapURL") %>">Wiki</a>
-<a href="<%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("wikiURL") %>">Map</a>
+<b>Wiki</b> : <a href="<%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("wikiURL") %>"><%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("wikiURL") %></a><br/>
+<b>Map</b> : <a href="<%= @launch["location"] |> Map.get("pads") |> List.first |> Map.get("mapURL") %>">Link</a>
 
 
 <!-- ROCKETS -->
-<h4 style="margin-top:50px;">
+<h4 style="margin-top:50px; margin-left:-10px;">
   Rocket
 </h4>
 <hr>
-<%= @launch["rocket"] |> Map.get("name") %><br/>
-<a href="<%= @launch["rocket"] |> Map.get("imageURL") %>">Image</a><br/>
-Wiki : <a href="<%= @launch["rocket"] |> Map.get("wikiURL") %>"><%= @launch["rocket"] |> Map.get("wikiURL") %></a>
+<a href="<%= @launch["rocket"] |> Map.get("imageURL") %>"><%= @launch["rocket"] |> Map.get("name") %></a><br/>
+<b>Wiki</b> : <a href="<%= @launch["rocket"] |> Map.get("wikiURL") %>"><%= @launch["rocket"] |> Map.get("wikiURL") %></a>
 
 
 
 <!-- MEDIA -->
 <%= if length(@launch["vidURLs"]) > 0 do %>
-  <h4 style="margin-top:50px;">
-    Live Streams
+  <h4 style="margin-top:50px; margin-left:-10px">
+    Video Streams
   </h4>
   <hr>
   <%= for videoURL <- @launch["vidURLs"] do %>

@@ -75,7 +75,7 @@
       <!-- PREV PAGE / FILTER / NEXT PAGE -->
       <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px; margin-top:10px">
         
-        <div class="col-md-12" style="margin-top:10px; text-align:center">
+        <div class="col-md-12" style="margin-bottom:-10px; text-align:center">
           <%= if is_greater(@offset, 0) do %>
             <input type="submit" class="btn btn-primary" value="&lt;&lt;" onclick="document.getElementById('idx-offset').value = <%= prev_page(@offset, @page_size) %>">
           <% else %>
@@ -96,6 +96,6 @@
       </div>
     </div>
 
-    <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px;"></div><!-- CLEAR -->
+    <div class="form-group row" style="background-color:#FAFAFA; border-radius:4px; border: 1px solid #e1dddd"></div><!-- CLEAR -->
   </div>
 </form>

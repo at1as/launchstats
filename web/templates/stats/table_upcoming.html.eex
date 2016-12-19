@@ -26,10 +26,14 @@
     <td class="text-center">
       <%= if launch["tbddate"] == 0 do %>
         ✓
+      <% else %>
+        ✗
       <% end %>
       &nbsp;&nbsp;
       <%= if launch["tbdtime"] == 0 do %>
         ✓
+      <% else %>
+        ✗
       <% end %>
     </td>
     

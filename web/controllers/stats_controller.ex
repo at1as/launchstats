@@ -68,6 +68,7 @@ defmodule Launchstats.StatsController do
 
     response   = make_request(url)
 
+    IO.puts "Fetching downstream resources #{url}" 
     {launches, count, total} = extract_from_body(response, "launches")
    
     empty_resp  = [%{"name" => "All", "id" => nil, "countrycode"  => nil}]
